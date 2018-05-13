@@ -44,12 +44,15 @@ import List.Extra exposing (mapAccuml)
 import Svg.PathD as PathD exposing (Segment)
 
 
-{-| Turtle consists of 4 states.
+{-| Turtle consists of 4 primary states.
 
   - D -- Draw forward
   - S -- Skip foward without drawing
   - L -- Turn left by some degrees
   - R -- Turn right by some degrees
+
+We also supply additional states `A`, `B`, and `C`, which are ignored during
+drawing. They are useful for constructing rulesets only.
 
 -}
 type State
@@ -57,6 +60,9 @@ type State
     | S -- | Skip foward without drawing
     | L -- | Turn left by some degrees
     | R -- | Turn right by some degrees
+    | A -- | Ignored by the drawing rules
+    | B -- | Ignored by the drawing rules
+    | C -- | Ignored by the drawing rules
 
 
 {-| Transforms a list of `State`s into `Svg.Path` `d`-compatible property
@@ -95,5 +101,14 @@ turtle states point angle =
 
                 R ->
                     ( ( p, a + 90 ), [] )
+
+                A ->
+                    ( ( p, a ), [] )
+
+                B ->
+                    ( ( p, a ), [] )
+
+                C ->
+                    ( ( p, a ), [] )
     in
         List.concat (Tuple.second <| mapAccuml next ( point, angle ) states)

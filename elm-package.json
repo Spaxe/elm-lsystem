@@ -1,5 +1,5 @@
 {
-    "version": "1.1.1",
+    "version": "2.0.0",
     "summary": "Implementation of L-Systems in Elm",
     "repository": "https://github.com/Spaxe/elm-lsystem.git",
     "license": "MIT",
