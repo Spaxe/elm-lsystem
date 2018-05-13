@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "summary": "Implementation of L-Systems in Elm",
-    "repository": "https://github.com/Spaxe/elm-l-system.git",
+    "repository": "https://github.com/Spaxe/elm-lsystem.git",
     "license": "MIT",
     "source-directories": [
         "."
