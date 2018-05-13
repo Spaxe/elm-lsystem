@@ -1,0 +1,99 @@
+module LSystem.Turtle exposing (..)
+
+{-| Turtle graphics consists of 4 states:
+
+    type State
+        = D -- | Draw forward
+        | S -- | Skip foward without drawing
+        | L -- | Turn left by some degrees
+        | R -- | Turn right by some degrees
+
+(In formal literature, it is known as `F`, `f`, `-`, and `+` respectively.)
+
+Given a starting point and an angle, you can iterate through a list of `State`s
+and create a generative drawing.
+
+For example, the following ruleset applied 3 times will generate [this](https://twitter.com/Xavier_Ho/status/995651719064252416):
+
+    rule : LSystem.Rule State
+    rule state =
+        case state of
+            D ->
+                [ D, D, R, D, L, D, R, D, R, D, D ]
+
+            S ->
+                [ S ]
+
+            L ->
+                [ L ]
+
+            R ->
+                [ R ]
+
+If you want a complete example of how this can be used in the Elm Architecture,
+see <https://github.com/creative/elm-generative/blob/master/example/Turtle.elm>
+
+
+# Module functions
+
+@docs State, turtle
+
+-}
+
+import List.Extra exposing (mapAccuml)
+import Svg.PathD as PathD exposing (Segment)
+
+
+{-| Turtle consists of 4 states.
+
+  - D -- Draw forward
+  - S -- Skip foward without drawing
+  - L -- Turn left by some degrees
+  - R -- Turn right by some degrees
+
+-}
+type State
+    = D -- | Draw forward
+    | S -- | Skip foward without drawing
+    | L -- | Turn left by some degrees
+    | R -- | Turn right by some degrees
+
+
+{-| Transforms a list of `State`s into `Svg.Path` `d`-compatible property
+strings. This requires a starting point and a starting angle.
+
+You can use the `Svg.PathD` library's [`d_`](http://package.elm-lang.org/packages/spaxe/svg-pathd/1.0.1/Svg-PathD#d_)
+to draw segments as a SVG attribute:
+
+    import Svg.PathD as PathD exposing (d_)
+
+    ...
+
+
+    Svg.path
+        [ d_ <| turtle [ D, R, D, R, D, R, D ] (50, 50) 90
+        ]
+        []
+
+-}
+turtle : List State -> ( Float, Float ) -> Float -> List Segment
+turtle states point angle =
+    let
+        move ( x, y ) a =
+            ( x + cos (degrees a), y + sin (degrees a) )
+
+        next ( p, a ) state =
+            case state of
+                D ->
+                    ( ( move p a, a ), [ PathD.L (move p a) ] )
+
+                S ->
+                    ( ( move p a, a ), [ PathD.M (move p a) ] )
+
+                L ->
+                    ( ( p, a - 90 ), [] )
+
+                R ->
+                    ( ( p, a + 90 ), [] )
+    in
+        List.concat (Tuple.second <| mapAccuml next ( point, angle ) states)

@@ -1,13 +1,18 @@
 {
-    "version": "1.0.0",
+    "version": "1.1.1",
     "summary": "Implementation of L-Systems in Elm",
     "repository": "https://github.com/Spaxe/elm-lsystem.git",
     "license": "MIT",
     "source-directories": [
         "."
     ],
-    "exposed-modules": [ "LSystem" ],
+    "exposed-modules": [
+        "LSystem",
+        "LSystem.Turtle"
+    ],
     "dependencies": {
+        "Spaxe/svg-pathd": "1.0.1 <= v < 2.0.0",
+        "elm-community/list-extra": "7.1.0 <= v < 8.0.0",
         "elm-lang/core": "5.1.1 <= v < 6.0.0",
         "elm-lang/html": "2.0.0 <= v < 3.0.0"
     },
