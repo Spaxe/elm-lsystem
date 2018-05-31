@@ -77,13 +77,13 @@ to draw segments as a SVG attribute:
 
 
     Svg.path
-        [ d_ <| turtle [ D, R, D, R, D, R, D ] (50, 50) 90
+        [ d_ <| turtle [ D, R, D, R, D, R, D ] 90
         ]
         []
 
 -}
-turtle : List State -> ( Float, Float ) -> Float -> List Segment
-turtle states point angle =
+turtle : List State -> Float -> List Segment
+turtle states dAngle =
     let
         move ( x, y ) a =
             ( x + cos (degrees a), y + sin (degrees a) )
@@ -97,10 +97,10 @@ turtle states point angle =
                     ( ( move p a, a ), [ PathD.M (move p a) ] )
 
                 L ->
-                    ( ( p, a - 90 ), [] )
+                    ( ( p, a - dAngle ), [] )
 
                 R ->
-                    ( ( p, a + 90 ), [] )
+                    ( ( p, a + dAngle ), [] )
 
                 A ->
                     ( ( p, a ), [] )
@@ -111,4 +111,4 @@ turtle states point angle =
                 C ->
                     ( ( p, a ), [] )
     in
-        List.concat (Tuple.second <| mapAccuml next ( point, angle ) states)
+        List.concat (Tuple.second <| mapAccuml next ( (0, 0), 0 ) states)
