@@ -1,4 +1,4 @@
-module LSystem.Turtle exposing (..)
+module LSystem.Turtle exposing (State(..), turtle)
 
 {-| Turtle graphics consists of 4 states:
 
@@ -111,4 +111,4 @@ turtle states dAngle =
                 C ->
                     ( ( p, a ), [] )
     in
-        List.concat (Tuple.second <| mapAccuml next ( (0, 0), 0 ) states)
+    List.concat (Tuple.second <| mapAccuml next ( ( 0, 0 ), 0 ) states)

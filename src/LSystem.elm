@@ -1,4 +1,6 @@
-module LSystem exposing (Rule, apply, print)
+module LSystem exposing
+    ( Rule, apply )
+
 
 {-| Implementation of a L-System.
 
@@ -79,12 +81,8 @@ will always yield the same result regardless of outside state.
 
 @docs Rule, apply
 
-
-# Utility functions
-
-@docs print
-
 -}
+
 
 
 {-| Rule to rewrite to. `Rule` is completed by defining `a`, and a `rule`
@@ -126,9 +124,3 @@ apply : Rule a -> List a -> List a
 apply rule states =
     List.concatMap (\s -> rule s) states
 
-
-{-| Prints the L-System State.
--}
-print : List a -> String
-print state =
-    String.join "" (List.map toString state)
