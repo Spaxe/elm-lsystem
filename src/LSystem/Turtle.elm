@@ -71,13 +71,13 @@ strings. This requires a starting point and a starting angle.
 You can use the `Svg.PathD` library's [`d_`](http://package.elm-lang.org/packages/spaxe/svg-pathd/1.0.1/Svg-PathD#d_)
 to draw segments as a SVG attribute:
 
-    import Svg.PathD as PathD exposing (d_)
+    import Svg.PathD as PathD exposing (pathD)
 
     ...
 
 
     Svg.path
-        [ d_ <| turtle [ D, R, D, R, D, R, D ] 90
+        [ d <| pathD <| turtle [ D, R, D, R, D, R, D ] 90
         ]
         []
 

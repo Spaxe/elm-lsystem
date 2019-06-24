@@ -1,7 +1,6 @@
 module Tests exposing (suite)
 
-import Expect exposing (Expectation)
-import Fuzz exposing (Fuzzer, int, list, string)
+import Expect
 import LSystem
 import Test exposing (..)
 
@@ -9,6 +8,7 @@ import Test exposing (..)
 type State
     = A
     | B
+
 
 rule : LSystem.Rule State
 rule state =
@@ -19,12 +19,13 @@ rule state =
         B ->
             [ A ]
 
+
 suite : Test
 suite =
     describe "The LSystem Module"
         [ test "can perform deterministic generative rules" <|
             \_ ->
                 Expect.equal [ A, B, A, A, B ] <|
-                    LSystem.apply rule <| LSystem.apply rule [ A, B ]
+                    LSystem.apply rule <|
+                        LSystem.apply rule [ A, B ]
         ]
-
